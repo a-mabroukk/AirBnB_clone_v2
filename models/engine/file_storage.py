@@ -60,4 +60,4 @@ class FileStorage:
         if not obj:
             return
         else:
-            del FileStorage.__objects.obj
+            del obj

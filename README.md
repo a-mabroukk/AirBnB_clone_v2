@@ -44,3 +44,8 @@ under the **test/** folder and can execute all of them by simply running:
 ```python3 -m unittest discover tests ```
 
 from the root directory.
+
+---
+### Authors
+- Mohamed Abd-elrady [Linkedin](https://www.linkedin.com/in/mohamed-abd-elrady-mosa/)
+- Alaa Fayed [Linkedin](https://www.linkedin.com/in/alaa-fayed-47b44b285)

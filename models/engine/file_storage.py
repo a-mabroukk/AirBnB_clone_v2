@@ -8,15 +8,9 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = {}
 
-    def all(self) to def all(self, cls=None)
-        all_objects = {}
-        if cls is None:
-            return FileStorage.__objects
-        else:
-            for objs, value  in FileStorage.__objects.items():
-                if isinstance(FileStorage.__objects[value], cls):
-                    all_objects[objs] = value
-                return all_objects
+    def all(self, cls=None):
+        """returns the list of objects of one type of class"""
+        return self.__objects
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -57,7 +51,9 @@ class FileStorage:
 
     def delete(self, obj=None):
         """Delete a given object from __objects, if it exists."""
-        try:
-            del self.__objects["{}.{}".format(type(obj).__name__, obj.id)]
-        except (AttributeError, KeyError):
-            pass
+        if not obj:
+            return
+        else:
+            for objec, value in FileStorage.__objects.items():
+                if objec == value:
+                    del FileStorage.__objects[objec]

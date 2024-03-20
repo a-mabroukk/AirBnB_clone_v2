@@ -61,6 +61,6 @@ class FileStorage:
             return
         else:
             for objec, value in FileStorage.__objects.items():
-                value = self.obj.id
+                value = self.__objects.id
                 if objec == value:
                     del FileStorage.__objects[objec]

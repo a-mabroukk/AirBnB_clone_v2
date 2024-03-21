@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import os
+from os import getenv
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import (create_engine)
@@ -15,25 +15,27 @@ classes = {'BaseModel': BaseModel, 'User': User, 'Place': Place,
     'Review': Review
 }
 
+mysql_user = getenv('HBNB_MYSQL_USER')
+password = getenv('HBNB_MYSQL_PWD')
+host = getenv('HBNB_MYSQL_HOST')
+db = getenv('HBNB_MYSQL_DB')
+env = getenv('HBNB_ENV')
+
 
 class DBStorage:
     """"""
     __engine = None
     __session = None
 
-    user = os.environ['HBNB_MYSQL_USER']
-    password = os.environ['HBNB_MYSQL_PWD']
-    host = os.environ['HBNB_MYSQL_HOST']
-    db = os.environ['HBNB_MYSQL_DB']
-    env = os.environ['HBNB_ENV']
 
     def __init__(self):
         """Public instance methods"""
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'
-                        .format(user, password, host, db), pool_pre_ping=True)
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format
+                                      (mysql_user, password, host, db),
+                                      pool_pre_ping=True)
 
-    if env == 'test':
-        Base.metadata.drop_all(self.__engine)
+        if env == 'test':
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """query on the current database session"""

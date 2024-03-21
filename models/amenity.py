@@ -5,6 +5,5 @@ from models.base_model import BaseModel, Base
 
 class Amenity(BaseModel, Base):
     """Amenity class that inherits from BaseModel and Base"""
-    __tablename__ = ""
     name = ""
-    place_amenities = ""
+

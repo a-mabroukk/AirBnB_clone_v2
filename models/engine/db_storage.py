@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from os import getenv
 from models.base_model import BaseModel, Base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import (create_engine)
 from models.user import User
 from models.place import Place
@@ -70,8 +70,8 @@ class DBStorage:
 
         Base.metadata.create_all(self.__engine)
 
-        self.__session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
 
-        self.__session = scoped_session(session_factory)
+        Session = scoped_session(session_factory)
 
-        self.__session = session()
+        self.__session = Session()

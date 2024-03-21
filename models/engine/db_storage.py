@@ -13,20 +13,19 @@ from models.review import Review
 classes = {'BaseModel': BaseModel, 'User': User, 'Place': Place,
            'State': State, 'City': City, 'Amenity': Amenity, 'Review': Review}
 
-mysql_user = getenv('HBNB_MYSQL_USER')
-password = getenv('HBNB_MYSQL_PWD')
-host = getenv('HBNB_MYSQL_HOST')
-db = getenv('HBNB_MYSQL_DB')
-env = getenv('HBNB_ENV')
-
 
 class DBStorage:
-    """"""
+    """class definition"""
     __engine = None
     __session = None
 
     def __init__(self):
         """Public instance methods"""
+        mysql_user = getenv('HBNB_MYSQL_USER')
+        password = getenv('HBNB_MYSQL_PWD')
+        host = getenv('HBNB_MYSQL_HOST')
+        db = getenv('HBNB_MYSQL_DB')
+        env = getenv('HBNB_ENV')
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format
                                       (mysql_user, password, host, db),
                                       pool_pre_ping=True)

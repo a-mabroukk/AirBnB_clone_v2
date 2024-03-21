@@ -53,10 +53,10 @@ class BaseModel:
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
-        if _sa_instance_state is None:
+        if not dictionary['_sa_instance_state']:
             return
         else:
-            del dictionary[_sa_instance_state]
+            del dictionary['_sa_instance_state']
             dictionary.update({'__class__': self.__class__.__name__})
         return dictionary
 

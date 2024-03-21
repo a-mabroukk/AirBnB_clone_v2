@@ -5,12 +5,18 @@ from sqlalchemy import Column, String, Integer, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
 from models.review import Review
 
+place_amenity = Table('place_amenity', Base.metadata,
+                    Column('place_id', String(60), ForeignKey('places.id'),
+                            primary_key=True),
+                    Column('amenity_id', String(60),
+                            ForeignKey('amenities.id'), primary_key=True))
+
 
 class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = "places"
-    city_id = Column(String(60), nullable=False, ForeignKey=('cities.id'))
-    user_id = Column(String(60), nullable=False, ForeignKey=('users.id'))
+    city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
+    user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     name = Column(String(128), nullable=False)
     description = Column(String(1024), nullable=True)
     number_rooms = Column(Integer, nullable=False, default=0)
@@ -21,9 +27,8 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
     amenity_ids = []
 
-    user = relationship("User", back_populates="places")
-    cities = relationship("City", back_populates="cities")
-    reviews = relationship("Review", backref="place", cascade="all, delete")
+    reviews = relationship("Review", backref="place",
+        cascade="all, delete-orphan")
 
     @property
     def reviews(self):
@@ -35,13 +40,8 @@ class Place(BaseModel, Base):
                 all_reviews.append(obj)
         return all_reviews
 
-    place_amenity = Table('association', Base.metadata,
-        Column('place_id', String(60), ForeignKey('places.id'),
-                primary_key=True), Column('amenity_id'), String(60),
-                ForeignKey('amenities.id'),
-        primary_key=True)
-
-    amenities = relationship("Amenity", secondary=place_amenity, viewonly=False)
+    amenities = relationship("Amenity", secondary=place_amenity,
+        backref='place_amenities', viewonly=False)
 
     @property
     def amenities(self):

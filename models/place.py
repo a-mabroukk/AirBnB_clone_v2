@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, ForeignKey, Float
+from sqlalchemy import Column, String, Integer, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
 from models.review import Review
 
 
-class Place(BaseModel):
+class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = "places"
     city_id = Column(String(60), nullable=False, ForeignKey=('cities.id'))
@@ -34,3 +34,30 @@ class Place(BaseModel):
             if isinstance(instance, Review) and Review.place_id == Place.id:
                 all_reviews.append(obj)
         return all_reviews
+
+    place_amenity = Table('association', Base.metadata,
+        Column('place_id', String(60), ForeignKey('places.id'),
+                primary_key=True), Column('amenity_id'), String(60),
+                ForeignKey('amenities.id'),
+        primary_key=True)
+
+    amenities = relationship("Amenity", secondary=place_amenity, viewonly=False)
+
+    @property
+    def amenities(self):
+        """ returns the list of Amenity instances based on the attribute"""
+        from models import storage
+        all_amenities = models.storage.all(Amenity)
+        for obj, instance in all_amenities.items():
+            if isinstance(instance, Amenity) and Place.amenity_ids == Amenity.id:
+                all_amenities.append(obj)
+        return all_amenities
+
+    @amenities.setter
+    def amenities(self, value):
+        """ handles append method for adding an Amenity.id to the attribute"""
+        from models import storage
+        if isinstance(value, Amenity):
+            self.amenity_ids.append(value.Amenity.id)
+
+            #self.amenity_ids = append(Amenity.id)

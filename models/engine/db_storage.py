@@ -10,10 +10,9 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
-classes = {'BaseModel': BaseModel, 'User': User, 'Place': Place,
-    'State': State, 'City': City, 'Amenity': Amenity,
-    'Review': Review
-}
+classes = {'BaseModel': BaseModel, 'User': User, 'Place': Place, 'State':
+         State, 'City': City, 'Amenity': Amenity,
+        'Review': Review}
 
 mysql_user = getenv('HBNB_MYSQL_USER')
 password = getenv('HBNB_MYSQL_PWD')
@@ -26,7 +25,6 @@ class DBStorage:
     """"""
     __engine = None
     __session = None
-
 
     def __init__(self):
         """Public instance methods"""
@@ -70,7 +68,8 @@ class DBStorage:
 
         Base.metadata.create_all(self.__engine)
 
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_factory = sessionmaker(bind=self.__engine,
+                                       expire_on_commit=False)
 
         Session = scoped_session(session_factory)
 

@@ -2,6 +2,7 @@
 from os import getenv
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.orm.session import Session
 from sqlalchemy import create_engine
 from models.user import User
 from models.place import Place

@@ -38,7 +38,7 @@ class Place(BaseModel, Base):
         from models import storage
         all_reviews = models.storage.all(Review)
         for obj, instance in all_reviews.items():
-            if isinstance(instance, Review) and obj.place_id == self.id:
+            if isinstance(instance, Review) and Review.place_id == Place.id:
                 all_reviews.append(obj)
         return all_reviews
 
@@ -51,7 +51,7 @@ class Place(BaseModel, Base):
         from models import storage
         all_amenities = models.storage.all(Amenity)
         for obj, instance in all_amenities.items():
-            if isinstance(instance, Amenity) and self.amenity_ids == obj.id:
+            if isinstance(instance, Amenity) and Place.amenity_ids == Amenity.id:
                 all_amenities.append(obj)
         return all_amenities
 

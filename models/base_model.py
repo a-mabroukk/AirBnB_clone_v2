@@ -14,13 +14,6 @@ Base = declarative_base()
 
 
 class BaseModel:
-<<<<<<< HEAD
-    """A base class for all hbnb models"""
-=======
-    '''
-        Base class for other classes to be used for the duration.
-    '''
->>>>>>> c33168d55050067b340170d07bbfb7e91fc0aa80
     id = Column(String(60), nullable=False, primary_key=True)
     created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow(), nullable=False)

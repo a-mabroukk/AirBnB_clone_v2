@@ -11,7 +11,7 @@ def do_deploy(archive_path):
     """distributes an archive to the web servers"""
     if not os.path.exists(archive_path):
         return False
-    if archive_path:
+    try:
         filename = archive_path.split("/")[-1]
         extract = filename.split(".")[0]
         path = "/data/web_static/releases/"
@@ -24,5 +24,5 @@ def do_deploy(archive_path):
         run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, extract))
         return True
-    else:
+    except:
         return False

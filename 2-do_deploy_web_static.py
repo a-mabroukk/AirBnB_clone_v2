@@ -4,7 +4,7 @@ from fabric.api import put, run, env, sudo
 from os.path import exists
 
 env.hosts = ["54.209.26.10", "34.207.120.104"]
-
+env.user = "ubuntu"
 
 def do_deploy(archive_path):
     """distributing an archive to your web servers"""

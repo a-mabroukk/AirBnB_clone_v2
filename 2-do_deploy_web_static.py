@@ -9,7 +9,7 @@ env.user = "ubuntu"
 
 def do_deploy(archive_path):
     """distributes an archive to the web servers"""
-    if not exists(archive_path):
+    if not os.path.exists(archive_path)::
         return False
     if archive_path:
         filename = archive_path.split("/")[-1]

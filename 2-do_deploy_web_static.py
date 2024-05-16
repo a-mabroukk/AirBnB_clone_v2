@@ -6,28 +6,24 @@ from os.path import exists
 env.hosts = ["54.209.26.10", "34.207.120.104"]
 env.user = "ubuntu"
 
+
 def do_deploy(archive_path):
     """distributing an archive to your web servers"""
     if not os.path.exists(archive_path):
         return False
 
     if archive_path:
-        put("archive_path", "/tmp/")
-        # Extract filename from archive path
-        filename = os.path.basename(archive_path).split(".")[0]
-        sudo("mkdir -p /data/web_static/releases/{}/".format(filename))
-
-        # Unpack archive
-        run("tar -xzf /tmp/{}.tgz -C /data/web_static/releases/{}/"
-            .format(filename, filename))
-
-        run(f"rm -rf /tmp/{filename}.tgz")
+        filename = archive_path.split("/")[-1]
+        extract = file_n.split(".")[0]
+        path = "/data/web_static/releases/"
+        put(archive_path, "/tmp/")
+        run("mkdir -p {}{}/".format(path, extract))
+        run("tar -xzf /tmp/{} -C {}{}/".format(filename, path, extract))
+        run("rm /tmp/{}".format(filename))
+        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, extract))
+        run("rm -rf {}{}/web_static".format(path, extract))
         run("rm -rf /data/web_static/current")
-        run("mv /data/web_static/releases/{}/web_static/* ".format(filename) +
-            "/data/web_static/releases/{}/".format(filename))
-
-        run("ln -s /data/web_static/releases/{}/ /data/web_static/current"
-            .format(filename))
+        run("ln -s {}{}/ /data/web_static/current".format(path, extact))
         return True
     else:
         return False
